@@ -1,31 +1,17 @@
 module.exports = {
   path: "profile",
   method: "PUT",
-  _title: "プロフィール更新",
-  _comment: "プロフィール更新API",
+  _title: "プロフィール削除API",
+  _comment: "ユーザ退会処理を行います。",
   _auth: true,
   inputs: {
-    user: {
-      type: "User",
-      required: true,
-      _comment: "ユーザ情報"
-    },
   },
   outputs: {
     "status": {
       type: "String",
       value: "OK",
-      _title: "ユーザプロフィール更新",
       _comment: "応答ステータス"
-    },
-    "user":{
-      type: "User",
-      value: {
-        name: "Tom",
-        email: "t.togo@gmail.com"
-      },
-      _comment: "登録済みユーザ情報"
-    },
+    }
   },
   tests:[
     {

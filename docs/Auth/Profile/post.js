@@ -1,6 +1,7 @@
 module.exports = {
   path: "profile",
   method: "POST",
+  _title: "新規ユーザ登録API",
   _comment: "プロフィール登録API",
   inputs: {
     user: {

@@ -1,36 +1,35 @@
 module.exports = {
-  _path: "profile",
-  _method: "get",
-  comment: "プロフィール登録API",
-  _inputs:[ ],
-  _outputs: [
-    {
-      _type: "String",
-      _key: "status",
-      _value: "OK",
-      comment: "応答ステータス"
+  path: "profile",
+  method: "get",
+  _title: "ユーザプロフィール参照",
+  _comment: "プロフィール登録API",
+  inputs:[],
+  outputs: {
+    status: {
+      type: "String",
+      value: "OK",
+      _comment: "応答ステータス"
     },
-    {
-      _type: "Object",
-      _key: "user",
-      comment: "ユーザ情報"
+    user:{
+      type: "Object",
+      _comment: "ユーザ情報"
     },
-  ],
-  _tests:[
+  },
+  tests:[
     {
-      _request: {
-        _headers:{
+      request: {
+        headers:{
           "X-AUTH":"hogehoge"
         },
-        _params:{
+        params:{
           name: "hoge",
           email: "t.gotochatbox-inc.com",
           password: "hogehoge"
         }
       },
-      _response: {
-        _status: 200,
-        _body: {
+      response: {
+        status: 200,
+        body: {
           status: "OK"
         }
       }

@@ -1,30 +1,25 @@
 module.exports = {
-  path: "profile",
-  method: "PUT",
-  _title: "プロフィール更新",
-  _comment: "プロフィール更新API",
-  _auth: true,
+  path: "token",
+  method: "DELETE",
+  _title: "ログアウト処理",
+  _comment: "ログアウト処理を行いAPIを削除します。",
   inputs: {
-    user: {
-      type: "User",
+    credential: {
+      type: "Credential",
       required: true,
-      _comment: "ユーザ情報"
+      _comment: "認証情報"
     },
   },
   outputs: {
     "status": {
       type: "String",
       value: "OK",
-      _title: "ユーザプロフィール更新",
       _comment: "応答ステータス"
     },
-    "user":{
-      type: "User",
-      value: {
-        name: "Tom",
-        email: "t.togo@gmail.com"
-      },
-      _comment: "登録済みユーザ情報"
+    "token":{
+      type: "String",
+      value: "xxxxos-hoggehoge",
+      _comment: "認証用トークン"
     },
   },
   tests:[
@@ -32,8 +27,7 @@ module.exports = {
       _comment: "正常系のテスト",
       request: {
         params:{
-          user:{
-            name: "hoge",
+          credential:{
             email: "t.gotochatbox-inc.com",
             password: "hogehoge"
           }
@@ -42,7 +36,8 @@ module.exports = {
       response: {
         status: 200,
         body: {
-          status: "OK"
+          status: "OK",
+          token: "xxxxos-hogehogehoge"
         }
       }
     }

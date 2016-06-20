@@ -1,6 +1,7 @@
 module.exports = {
   path: "token",
   method: "POST",
+  _title: "ログイントークン発行API",
   _comment: "ログイントークン発行API",
   inputs: {
     credential: {
