@@ -1,5 +1,8 @@
 <?php
 namespace Chatbox\ApiAuth\Http\Controllers;
+use Chatbox\ApiAuth\Http\AuthRequest;
+use Chatbox\ApiAuth\Http\Service\ProfileService;
+
 /**
  * Created by PhpStorm.
  * User: mkkn
@@ -8,5 +11,57 @@ namespace Chatbox\ApiAuth\Http\Controllers;
  */
 class ProfileController
 {
+
+    protected $request;
+
+    protected $service;
+
+    /**
+     * ProfileController constructor.
+     * @param $request
+     * @param $service
+     */
+    public function __construct(
+        AuthRequest $request,
+        ProfileService $service)
+    {
+        $this->request = $request;
+        $this->service = $service;
+    }
+
+    public function create()
+    {
+        $user = $this->request->getUserDataForRegister();
+        $user = $this->service->register($user);
+        return [
+            "user" => $user
+        ];
+    }
+
+    public function load(){
+        $token = $this->request->getToken();
+        $user = $this->service->findByToken($token);
+        return [
+            "user" => $user
+        ];
+    }
+
+    public function update(){
+        $token = $this->request->getToken();
+        $user = $this->request->getUserDataForUpdate();
+        $user = $this->service->update($token,$user);
+        return [
+            "user" => $user
+        ];
+    }
+
+    public function ban(){
+        $token = $this->request->getToken();
+        $user = $this->service->delete($token);
+        return [
+            "user" => $user
+        ];
+    }
+
 
 }

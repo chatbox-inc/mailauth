@@ -1,16 +1,19 @@
 <?php
 namespace Chatbox\ApiAuth\Domains;
 /**
- * Created by PhpStorm.
- * User: mkkn
- * Date: 2016/06/17
- * Time: 14:38
+ * 認証用一次発行トークン
+ *
  */
 interface TokenServiceInterface
 {
     // 値の保存
-    public function save($data);
+    public function createByUser(User $user):Token;
 
     // キーを値に変換
-    public function load($key);
+    public function loadByToken($key):Token;
+
+    // キーを無効化
+    public function inactive($key):Token;
+
+
 }

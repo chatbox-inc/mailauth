@@ -11,26 +11,37 @@ interface UserServiceInterface
     /**
      * @param $credential
      * @throws UserNotFouncException
-     * @return UserInterface
+     * @return User
      */
-    public function loadProfileByCredential(array $credential):UserInterface;
+    public function loadProfileByCredential(array $credential):User;
 
     /**
      * @param $credential
      * @throws UserNotFouncException
-     * @return UserInterface
-     *
+     * @return User
      */
-    public function loadProfileById($userId):UserInterface;
+    public function loadProfileById($userId):User;
 
-    public function registerProfile(array $data);
+    /**
+     * @param array $data
+     * @return User
+     */
+    public function registerProfile(array $data):User;
 
-    public function updateProfile();
+    /**
+     * @param $userId
+     * @param $data
+     * @throws UserNotFouncException
+     * @return User
+     */
+    public function updateProfile($userId,array $data):User;
 
-    public function deleteProfile();
-
-
+    /**
+     * @param $userId
+     * @throws UserNotFoundException
+     */
+    public function deleteProfile($userId);
 }
 
-class UserNotFouncException extends \Exception{};
+class UserNotFoundException extends \Exception{};
 
