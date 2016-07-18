@@ -13,7 +13,7 @@ interface TokenServiceInterface
     public function loadByToken($key):Token;
 
     // キーを無効化
-    public function inactive($key):Token;
+    public function inactive($key);
 
 
 }

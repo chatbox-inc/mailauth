@@ -11,8 +11,6 @@ use Chatbox\ApiAuth\Http\Service\TokenService;
  */
 class TokenController
 {
-    use AuthRequestTrait;
-
     protected $request;
     protected $service;
 

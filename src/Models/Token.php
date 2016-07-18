@@ -35,7 +35,7 @@ class Token extends Model implements TokenServiceInterface
         return new Entity($key,$user);
     }
 
-    public function inactive($key):Entity
+    public function inactive($key)
     {
         $tokenModel = $this->where("key",$key)->first();
         $tokenModel->delete();

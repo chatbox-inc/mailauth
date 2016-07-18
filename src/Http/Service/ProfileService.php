@@ -34,7 +34,7 @@ class ProfileService
     }
 
     public function findByToken($token):User{
-        return $this->token->load($token);
+        return $this->token->loadByToken($token)->user;
     }
 
     public function update($token,$user):User{

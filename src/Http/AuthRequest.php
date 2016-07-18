@@ -25,7 +25,7 @@ class AuthRequest
     }
 
     public function getToken(){
-        $token = $this->request()->header("X-AUTH-TOKEN");
+        $token = $this->request()->header("X-AUTHTOKEN");
         $val = $this->validator([
             "token" => $token
         ],[
