@@ -1,0 +1,33 @@
+{
+    "name": "chatbox-inc/apiauth",
+    "authors": [
+        {
+            "name": "mikakane",
+            "email": "mikakane2@gmail.com"
+        }
+    ],
+    "autoload":{
+        "psr-4":{
+            "Chatbox\\ApiAuth\\": "./src/"
+        }
+    },
+    "autoload-dev":{
+        "psr-4":{
+            "App\\": "./sample/app/"
+        },
+        "classmap":[
+            "./sample/database/",
+            "./tests/"
+        ]
+    },
+    "require": {
+        "chatbox-inc/token": "0.0.*"
+    },
+    "require-dev": {
+        "laravel/lumen": "^5.2",
+        "chatbox-inc/lumen-providers": "dev-master"
+    },
+    "scripts":{
+        "post-install-cmd": "touch sample/database/database.sqlite"
+    }
+}

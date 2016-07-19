@@ -1,0 +1,4 @@
+/vendor/
+/sample/database/database.sqlite
+/sample/storage/*
+/composer.lock
