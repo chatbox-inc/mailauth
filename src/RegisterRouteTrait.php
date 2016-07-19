@@ -18,7 +18,7 @@ trait RegisterRouteTrait
         $router->post("login",TokenController::class."@login");
         $router->post("logout",TokenController::class."@logout");
 
-        $router->post("profsile",ProfileController::class."@create");
+        $router->post("profile",ProfileController::class."@create");
         $router->get("profile",ProfileController::class."@load");
         $router->put("profile",ProfileController::class."@update");
         $router->delete("profile",ProfileController::class."@ban");
