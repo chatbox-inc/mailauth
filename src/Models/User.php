@@ -8,20 +8,21 @@ use Illuminate\Validation\ValidationException;
 use Chatbox\ApiAuth\Domains\User as Entity;
 
 /**
- * Created by PhpStorm.
- * User: mkkn
- * Date: 2016/06/17
- * Time: 16:54
+ * TODO Eloquent を外部注入する形に。
  */
-class User extends Model implements UserServiceInterface
+abstract class User extends Model implements UserServiceInterface
 {
-    protected $table = "t_user";
-
-    protected $fillable = ["name","email","password"];
+//    protected $table = "t_user";
+//
+//    protected $fillable = ["name","email","password"];
 
 
     protected function convertEntity():Entity{
-        return new Entity($this->id,$this->attributes,$this->entityFilter());
+        return new Entity(
+            $this->id,
+            $this->attributes,
+            $this->entityFilter()
+        );
     }
 
     protected function entityFilter():callable {
@@ -30,13 +31,9 @@ class User extends Model implements UserServiceInterface
         };
     }
 
-
     public function loadProfileByCredential(array $credential):Entity
     {
-        $user = $this->where([
-            "email" => array_get($credential,"email"),
-            "password" => $this->getPasswordHash(array_get($credential,"password")),
-        ])->get();
+        $user = $this->_whereByCredential($credential)->get();
         if(count($user) === 1){
             return $user->first()->convertEntity();
         }else{
@@ -44,11 +41,11 @@ class User extends Model implements UserServiceInterface
         }
     }
 
+    abstract protected function _whereByCredential($credential);
+
     public function loadProfileById($userId):Entity
     {
-        $user = $this->where([
-            "id" => $userId,
-        ])->first();
+        $user = $this->find($userId);
         if($user){
             return $user->convertEntity();
         }else{
@@ -58,20 +55,11 @@ class User extends Model implements UserServiceInterface
 
     public function registerProfile(array $data):Entity
     {
-        /** @var Factory $validator */
-        $validator = app("validator");
-        $val = $validator->make($data,[
-            "name" => ["required"],
-            "email" => ["required","email"],
-            "password" => ["required"],
-        ]);
-        if($val->passes()){
-            $data["password"] = $this->getPasswordHash($data["password"]);
-            return $this->create($data)->convertEntity();
-        }else{
-            throw new ValidationException($val);
-        }
+        $data = $this->createSaveData($data);
+        return $this->create($data)->convertEntity();
     }
+
+    abstract protected function createSaveData($data):array;
 
     protected function getPasswordHash($password){
         return sha1("chatboxinc".sha1(sha1($password."chatboxinc")));
@@ -79,9 +67,7 @@ class User extends Model implements UserServiceInterface
 
     public function updateProfile($userId, array $data):Entity
     {
-        $user = $this->where([
-            "id" => $userId,
-        ])->first();
+        $user = $this->find($userId);
         if($user){
             $user->update($data);
             return $user->convertEntity();
@@ -92,9 +78,7 @@ class User extends Model implements UserServiceInterface
 
     public function deleteProfile($userId)
     {
-        $user = $this->where([
-            "id" => $userId,
-        ])->first();
+        $user = $this->find($userId);
         if($user){
             $user->delete();
             return;
@@ -102,6 +86,4 @@ class User extends Model implements UserServiceInterface
             throw new UserNotFoundException("user not found");
         }
     }
-
-
 }

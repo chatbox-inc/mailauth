@@ -5,7 +5,7 @@ use Chatbox\ApiAuth\Domains\TokenServiceInterface;
 use Chatbox\ApiAuth\Domains\UserServiceInterface;
 
 /**
- * Created by PhpStorm.
+ * TODO クラス名をHTTPつきに
  * User: mkkn
  * Date: 2016/06/25
  * Time: 14:20
