@@ -2,3 +2,4 @@
 /sample/database/database.sqlite
 /sample/storage/*
 /composer.lock
+/apigen.phar

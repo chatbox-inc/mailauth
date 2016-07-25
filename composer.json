@@ -23,8 +23,7 @@
     "require": {
         "chatbox-inc/token": "0.0.*",
         "chatbox-inc/apiauth": "dev-master",
-        "chatbox-inc/mailtoken": "^0.0.1",
-        "illuminate/mail": "^5.2"
+        "chatbox-inc/mailtoken": "^0.0.3"
     },
     "require-dev": {
         "laravel/lumen": "^5.2",
