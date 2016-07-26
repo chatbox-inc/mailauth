@@ -11,6 +11,6 @@ namespace Chatbox\MailAuth;
 
 interface MailAuthMailSenderInterface
 {
-    public function send($email,array $data);
+    public function send($type,$email,array $data);
 
 }

@@ -7,6 +7,7 @@ use Chatbox\Mailtoken\RegisterControllerTrait;
 use Chatbox\MailAuth\Http\Controllers\RegisterMailController;
 use Chatbox\MailAuth\Http\Controllers\EmailChangeMailController;
 use Chatbox\MailAuth\Http\Controllers\PasswordResetMailController;
+use Chatbox\Token\Storage\TokenStorageInterface;
 
 
 /**
@@ -25,12 +26,28 @@ abstract class MailAuthServiceProvider extends ApiAuthServiceProvider
     {
         $app = $this->app;
 
-        $this->registerRouter($app,RegisterMailController::class);
-        $this->registerRouter($app,EmailChangeMailController::class);
-        $this->registerRouter($app,PasswordResetMailController::class);
+        if($router = $this->getRouter()){
+            $this->registerMailRoute($router);
+        }
+
+        $app->singleton(MailTokenService::class,function(){
+            return new MailTokenService($this->mailTokenStorageFactory());
+        });
+
+        $app->singleton(MailAuthMailSenderInterface::class,function(){
+            return $this->mailerServiceFactory();
+        });
 
         parent::register();
     }
 
+    protected function registerMailRoute($router){
+        $this->registerRouter($router,RegisterMailController::class,"mail/register/");
+        $this->registerRouter($router,EmailChangeMailController::class,"mail/changeMail/");
+        $this->registerRouter($router,PasswordResetMailController::class,"mail/changePass/");
+    }
+
     abstract protected function mailerServiceFactory():MailAuthMailSenderInterface;
+
+    abstract protected function mailTokenStorageFactory():TokenStorageInterface;
 }

@@ -10,6 +10,8 @@ use Chatbox\Token\Token;
  */
 class RegisterMailController extends AbstractMailController
 {
+    protected $type="register";
+
     protected function handle(Token $token)
     {
         // TODO: Implement handle() method.

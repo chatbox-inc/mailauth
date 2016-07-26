@@ -17,6 +17,7 @@ class FirstTables extends Migration
         $builder = Schema::getFacadeRoot();
         (new \App\Model\AuthTokenTable())->upTable($builder);
         (new \App\Model\UserTable())->upTable($builder);
+        (new \App\Model\MailTokenTable())->upTable($builder);
 
     }
 
@@ -31,5 +32,6 @@ class FirstTables extends Migration
 
         (new \App\Model\AuthTokenTable())->downTable($builder);
         (new \App\Model\UserTable())->downTable($builder);
+        (new \App\Model\MailTokenTable())->downTable($builder);
     }
 }

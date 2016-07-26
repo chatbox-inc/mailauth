@@ -7,8 +7,10 @@ use Illuminate\Support\Str;
  * Date: 2016/07/02
  * Time: 11:39
  */
-class RegisterTest extends TestCase
+class RegisterMailTest extends TestCase
 {
+
+
 
     protected function getResponseJson($key=null){
         $data = json_decode($this->response->content(),true);
@@ -37,8 +39,13 @@ class RegisterTest extends TestCase
      * @return mixed
      * @dataProvider sampleUserProvider
      */
-    public function testRegister($user)
+    public function testRegisterMail($user)
     {
+        $this->post("/mail/register/send",[
+            "email" => "t.goto@chatbox-inc.com"
+        ]);
+        $this->assertResponseOk();
+
         $this->post("/profile",[
             "user" => $user
         ]);

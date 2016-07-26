@@ -1,14 +1,10 @@
 ## メール認証APIのパッケージ
 
-mailtokenとapiauthをあわせてパッケージ利用可能にしたもの。
+apiauthに対しMailtoken 系のパッケージを追加してまとめて利用可能にしたもの。
 
-Laravel/Mailにベッタリ
+メールの送信はDI形式で。
 
-## メール認証APIのパッケージ
 
-mailtokenとapiauthをあわせてパッケージ利用可能にしたもの。
-
-Laravel/Mailにベッタリ
 
 ## Usage
 

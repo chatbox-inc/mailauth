@@ -21,15 +21,21 @@
         ]
     },
     "require": {
-        "chatbox-inc/token": "0.0.*",
         "chatbox-inc/apiauth": "dev-master",
-        "chatbox-inc/mailtoken": "^0.0.3"
+        "chatbox-inc/mailtoken": "0.0.*"
     },
     "require-dev": {
         "laravel/lumen": "^5.2",
-        "chatbox-inc/lumen-providers": "dev-master"
+        "chatbox-inc/lumen-providers": "dev-master",
+        "chatbox-inc/mailclerk": "dev-master",
+        "phpunit/phpunit": "^5.4"
     },
     "scripts":{
         "post-install-cmd": "touch sample/database/database.sqlite"
+    },
+    "config": {
+        "preferred-install": {
+            "chatbox-inc/*": "source"
+        }
     }
 }
