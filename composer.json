@@ -28,7 +28,9 @@
         "laravel/lumen": "^5.2",
         "chatbox-inc/lumen-providers": "dev-master",
         "chatbox-inc/mailclerk": "dev-master",
-        "phpunit/phpunit": "^5.4"
+        "phpunit/phpunit": "^5.4",
+        "peridot-php/peridot": "^1.18",
+        "chatbox-inc/peridot-lumen-plugin": "^1.0"
     },
     "scripts":{
         "post-install-cmd": "touch sample/database/database.sqlite"

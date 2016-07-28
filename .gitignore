@@ -3,3 +3,4 @@
 /sample/storage/*
 /composer.lock
 /apigen.phar
+/node_modules
