@@ -41,8 +41,10 @@ abstract class AbstractMailController extends MailTokenController
     protected function handleToken(Token $token)
     {
         return [
-            "key" => $token->key,
-            "value" => $token->value
+            "token" => [
+                "key" => $token->key,
+                "value" => $token->value
+            ]
         ];
     }
 

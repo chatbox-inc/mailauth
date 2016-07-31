@@ -5,16 +5,20 @@ describe('ArrayObject', function() {
         $this->arrayObject = new ArrayObject(['one', 'two', 'three']);
     });
 
-    describe('  ', function() {
-        it("should return the number of items", function() {
-            $client = $this->client;
-            $this->client->get("/hoge");
-            $response = $this->client->response;
 
-            assert($this->client->response);
+    describe('can register', function(){
+        $email = "t.goto".\Illuminate\Support\Str::random()."@chatbox-inc.com";
+        $data = [
+            "name" => "piyopiyo",
+            "password" => "hogehoge"
+        ];
+        $register = new \Chatbox\MailAuth\Specs\RegisterUser($this->lumen);
+        $register->describe($email,$data);
+        $this->register = $register;
+    });
 
-            $count = $this->arrayObject->count();
-            assert($count === 3, "expected 3");
-        });
+    describe("can login",function(){
+        $login = new \Chatbox\MailAuth\Specs\LoginUser($this->lumen);
+        $login->describe($this->register);
     });
 });
