@@ -1,5 +1,5 @@
 {
-  "name": "lib",
+  "name": "mailauth",
   "version": "1.0.0",
   "description": "```` $ npm i  https://github.com/chatbox-inc/mailauth.git ````",
   "main": "auth.js",
