@@ -9,8 +9,10 @@
 namespace Chatbox\MailAuth;
 
 
+use Chatbox\Token\Token;
+
 interface MailAuthMailSenderInterface
 {
-    public function send($type,$email,array $data);
+    public function send($type,$email,array $data,Token $token);
 
 }

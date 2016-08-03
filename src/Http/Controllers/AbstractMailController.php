@@ -33,9 +33,9 @@ abstract class AbstractMailController extends MailTokenController
         parent::__construct($token, $request);
     }
 
-    protected function sendmail($email, array $data)
+    protected function sendmail($email, array $data,Token $token)
     {
-        $this->sender->send($this->type,$email,$data);
+        $this->sender->send($this->type,$email,$data,$token);
     }
 
     protected function handleToken(Token $token)
