@@ -8,7 +8,8 @@ module.exports = ({register})=>{
         var email = "t.goto+hogehoge@chatbox-inc.com";
         var data = {}
         var addData = {
-            password: "chatbox5678"
+            password: "chatbox5678",
+            name: "後藤"
         }
 
         var mailToken = null
