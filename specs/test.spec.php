@@ -6,7 +6,7 @@ describe('ArrayObject', function() {
     });
 
 
-    describe('can register', function(){
+    describe('REGISTER', function(){
         $email = "t.goto".\Illuminate\Support\Str::random()."@chatbox-inc.com";
         $data = [
             "name" => "piyopiyo",

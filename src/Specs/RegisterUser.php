@@ -21,11 +21,18 @@ class RegisterUser
         $this->email = $email;
         $this->data = $data;
 
+        $self = $this;
+        describe("SENDMAIL API",function()use($self){
+            it("should return 400 without email", [$self,"testSend400"]);
+            it("should return 200",               [$self,"testSend200"]);
+        });
+        describe("CHECK API",function()use($self){
+            it("should return 200",               [$self,"testCheck200"]);
+        });
+        describe("SENDMAIL API",function()use($self){
+            it("should return 200",               [$self,"testHandle200"]);
+        });
 
-        it("should return 400 without email", [$this,"testSend400"]);
-        it("should return 200",               [$this,"testSend200"]);
-        it("should return 200",               [$this,"testCheck200"]);
-        it("should return 200",               [$this,"testHandle200"]);
     }
 
     public function testSend400(){

@@ -20,8 +20,13 @@ class LoginUser
     public function describe($register){
         $this->register = $register;
 
-        it("should return 200",               [$this,"testLogin200"]);
-        xit("should return 200",               [$this,"testLogout200"]);
+        $self = $this;
+        describe("LOGIN API",function()use($self){
+            it("should return 200",               [$self,"testLogin200"]);
+        });
+        describe("LOGOUT API",function()use($self){
+            xit("should return 200",               [$self,"testLogout200"]);
+        });
     }
 
 

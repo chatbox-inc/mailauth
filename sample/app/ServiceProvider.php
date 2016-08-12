@@ -4,7 +4,8 @@ use App\Model\AuthTokenTable;
 use App\Model\MailTokenTable;
 use App\Model\UserTable;
 use Chatbox\ApiAuth\ApiAuthServiceProvider;
-use Chatbox\ApiAuth\Models\Token;
+use Chatbox\Token\Token;
+//use Chatbox\ApiAuth\Models\Token;
 use Chatbox\ApiAuth\RegisterRouteTrait;
 use Chatbox\ApiAuth\Domains\UserServiceInterface;
 use Chatbox\MailAuth\MailAuthMailSenderInterface;
@@ -42,7 +43,7 @@ class ServiceProvider extends MailAuthServiceProvider
     {
         return new class() implements MailAuthMailSenderInterface{
 
-            public function send($type,$email, array $data)
+            public function send($type, $email, array $data, Token $token)
             {
                 /** @var MailClerk $mailer */
                 $mailer = app(MailClerk::class);
@@ -50,7 +51,6 @@ class ServiceProvider extends MailAuthServiceProvider
                     $m->to($email);
                 });
             }
-
         };
     }
 
