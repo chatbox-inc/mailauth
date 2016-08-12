@@ -1,0 +1,23 @@
+{
+  "name": "mailauth",
+  "version": "1.0.0",
+  "description": "```` $ npm i  https://github.com/chatbox-inc/mailauth.git ````",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "store": "^1.3.20",
+    "superagent": "^2.1.0"
+  },
+  "devDependencies": {
+    "intelli-espower-loader": "^1.0.1",
+    "mocha": "^3.0.2",
+    "power-assert": "^1.4.1"
+  }
+}

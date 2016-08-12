@@ -1,0 +1,136 @@
+# Example YAML to get you started quickly.
+# Be aware that YAML has indentation based scoping.
+# Code completion support is available so start typing for available options.
+swagger: '2.0'
+
+# This is your document metadata
+info:
+  version: "0.0.1"
+  title: 基本ユーザ管理API
+
+
+parameters:
+  authtoken:
+    name: X-AUTH
+    in: header
+    description: 認証用トークン
+    type: string
+    required: true
+  mailtoken:
+    name: X-MAILTOKEN
+    in: header
+    description: メールトークン
+    type: string
+    required: true
+
+# Describe your paths here
+paths:
+  # This is a path endpoint. Change it.
+  /mail/register/send:
+    post:
+      description: 登録用のメールを送信します。
+      parameters:
+        - $ref: '#/parameters/mailtoken'
+        -
+          name: email
+          in: query
+          description: 送信先メールアドレス
+          type: string
+          required: true
+        -
+          name: data
+          in: query
+          description: カスタム登録データ
+          type: string
+      responses:
+        200:
+          description: Successful response
+          schema:
+            title: Result
+            type: object
+            properties:
+              user:
+                $ref: '#/definitions/User'
+  /mail/register/check:
+    get:
+      description: 登録用のメールの発行トークンの有効性判定を行います。
+      parameters:
+        - $ref: '#/parameters/mailtoken'
+      responses:
+        # Response code
+        200:
+          description: Successful response
+          schema:
+            title: Result
+  /mail/register/handle:
+    post:
+      description: 登録用メールの発行トークンを用いてユーザ登録処理を行います。
+      parameters:
+        - $ref: '#/parameters/mailtoken'
+      responses:
+        # Response code
+        200:
+          description: Successful response
+          schema:
+            title: Result
+  /login:
+    post:
+      description: 登録用メールの発行トークンを用いてユーザ登録処理を行います。
+      parameters:
+        - $ref: '#/parameters/mailtoken'
+      responses:
+        # Response code
+        200:
+          description: Successful response
+          schema:
+            title: Result
+  /logout:
+    post:
+      description: 登録用メールの発行トークンを用いてユーザ登録処理を行います。
+      parameters:
+        - $ref: '#/parameters/mailtoken'
+      responses:
+        # Response code
+        200:
+          description: Successful response
+          schema:
+            title: Result
+  /profile:
+    get:
+      description: プロフィールの取得を行います。
+      parameters:
+        - $ref: '#/parameters/authtoken'
+      responses:
+        # Response code
+        200:
+          description: Successful response
+          schema:
+            title: Result
+            type: object
+            properties:
+              user:
+                $ref: '#/definitions/User'
+    post:
+      description: プロフィールの更新を行います。
+      parameters:
+        - $ref: '#/parameters/authtoken'
+      responses:
+        # Response code
+        200:
+          description: Successful response
+    delete:
+      description: プロフィールの削除を行います。
+      parameters:
+        - $ref: '#/parameters/authtoken'
+      responses:
+        # Response code
+        200:
+          description: Successful response
+definitions:
+  User:
+    type: object
+    properties:
+      email:
+        type: string
+      name:
+        type: string
