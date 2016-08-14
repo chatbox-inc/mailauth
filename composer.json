@@ -33,6 +33,10 @@
         "chatbox-inc/peridot-lumen-plugin": "^1.0"
     },
     "scripts":{
+        "post-update-cmd": [
+            "touch sample/.env",
+            "touch sample/database/database.sqlite"
+        ],
         "post-install-cmd": "touch sample/database/database.sqlite"
     },
     "config": {
