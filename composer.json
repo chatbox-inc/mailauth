@@ -20,7 +20,7 @@
         ]
     },
     "require": {
-        "chatbox-inc/apiauth": "dev-master",
+        "chatbox-inc/apiauth": "@stable",
         "chatbox-inc/token": "0.0.*",
         "chatbox-inc/mailtoken": "0.0.*"
     },
