@@ -78,7 +78,7 @@ $app->singleton(
 |
 */
 
- $app->register(\App\ServiceProvider::class);
+// $app->register(\App\ServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------

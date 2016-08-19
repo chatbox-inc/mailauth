@@ -14,7 +14,7 @@ use Chatbox\ApiAuth\ApiAuthService;
  */
 class RegisterMailController extends AbstractMailController
 {
-    protected $type="register";
+
 
     protected function handle(Token $token)
     {

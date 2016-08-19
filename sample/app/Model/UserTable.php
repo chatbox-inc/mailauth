@@ -9,13 +9,14 @@
 namespace App\Model;
 
 
-use Chatbox\ApiAuth\Models\User;
+use Chatbox\ApiAuth\Domains\User;
+use Chatbox\ApiAuth\Domains\UserNotFoundException;
+use Chatbox\ApiAuth\Models\UserEloquent;
 use Chatbox\Token\Storage\Migratable;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Schema\Builder;
 
-class UserTable extends User implements Migratable
+class UserTable extends UserEloquent implements Migratable
 {
     protected $table = "rt_user";
 
@@ -23,25 +24,28 @@ class UserTable extends User implements Migratable
         "name","email","password"
     ];
 
-
-    protected function _whereByCredential($credential)
+    protected function entity():User
     {
-        return $this->where([
+        return new User($this->id,$this->toArray());
+    }
+
+    protected function _findByCredential(array $credential):UserEloquent
+    {
+        $user = $this->where([
             "email" => $credential["email"],
-            "password" => $this->hashPassword($credential["password"])
-        ]);
+        ])->first();
+        if($user && password_verify($credential["password"],$user->password)){
+            return $user;
+        }else{
+            throw new UserNotFoundException;
+        }
     }
 
-    protected function createSaveData($data):array
+    protected function _create(array $data):UserEloquent
     {
-        $data["password"] = $this->hashPassword($data["password"]);
-        return $data;
+        $data["password"] = password_hash($data["password"],\PASSWORD_BCRYPT);
+        return $this->create($data);
     }
-
-    protected function hashPassword($password){
-        return sha1($password);
-    }
-
 
     public function upTable(Builder $builder)
     {

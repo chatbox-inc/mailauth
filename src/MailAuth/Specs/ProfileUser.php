@@ -8,7 +8,7 @@ use Peridot\Plugin\Lumen\LumenAppScope;
  */
 class ProfileUser
 {
-    protected $prefix = "";
+    public $prefix = "";
 
     public function __construct(LumenAppScope $lumen)
     {

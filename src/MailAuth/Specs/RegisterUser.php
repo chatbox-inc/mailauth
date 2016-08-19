@@ -53,6 +53,7 @@ class RegisterUser
         assert(is_string(array_get($body,"token.key")),"response code should be 200");
         $this->token = array_get($body,"token.key");
     }
+
     public function testCheck200(){
         $this->lumen->get("{$this->prefix}/mail/register/check",[
             "X-MAILTOKEN" => $this->token
@@ -64,6 +65,7 @@ class RegisterUser
         assert(is_array($body),"response code should be 200");
         assert(array_get($body,"token.key")===$this->token,"response code should be 200");
     }
+
     public function testHandle200(){
         $this->lumen->post("{$this->prefix}/mail/register/handle",[
             "user" => $this->data
