@@ -6,12 +6,11 @@
  * Time: 22:21
  */
 
-namespace Chatbox\Mailtoken\Http;
+namespace Chatbox\MailToken\Http;
 
-use Chatbox\Mailtoken\MailTokenTrait;
+use Chatbox\MailToken\MailTokenTrait;
 use Chatbox\Token\Token;
-use Chatbox\Mailtoken\MailTokenService;
-use Chatbox\Token\TokenServiceInterface;
+use Chatbox\MailToken\MailTokenService;
 
 /**
  * 基本的にはコントローラで実装
@@ -21,59 +20,41 @@ use Chatbox\Token\TokenServiceInterface;
  */
 abstract class MailTokenController
 {
-    use MailTokenTrait;
-
     protected $request;
+    /**
+     * @var MailTokenService
+     */
     protected $token;
 
     /**
-     * TokenServiceInterfaceではDI自動解決出来ないので、
-     * 継承してタイプヒントを実装に変更するか、
-     * Setterを利用してextendする。
      * @param MailTokenRequest $request
-     * @param TokenServiceInterface|null $token
+     * @param MailTokenService
      */
     public function __construct(
         MailTokenRequest $request,
-        TokenServiceInterface $token = null
+        MailTokenService $token
     ){
         $this->request = $request;
         $this->token = $token;
     }
 
-    /**
-     * @return TokenServiceInterface
-     */
-    public function getToken()
-    {
-        return $this->token;
-    }
-
-    /**
-     * @param TokenServiceInterface $token
-     */
-    public function setToken($token)
-    {
-        $this->token = $token;
-    }
-
-    protected function token():TokenServiceInterface
-    {
-        return $this->getToken();
-    }
-
-
     public function send(){
-        list($email,$data) = $this->request->mailaddress();
-        $data["email"] = $email;
-        $token = $this->mailtoken()->sendmail($email,$data);
+        $data = $this->request->mailaddress();
+        $token = $this->token->sendmail($data["email"],$data);
         return $this->handleToken($token);
     }
 
     public function load(){
-        $token = $this->request->token();
-        $token = $this->mailtoken->load($token);
+        $key = $this->request->token();
+        $token = $this->token->check($key);
         return $this->handleToken($token);
+    }
+
+    public function handle(){
+        $key = $this->request->token();
+        $token = $this->token->check($key);
+        $response = $this->token->handle($token);
+        return $response;
     }
 
     protected function handleToken(Token $token){

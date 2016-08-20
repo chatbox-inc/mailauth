@@ -1,9 +1,10 @@
 <?php
 namespace Chatbox\MailAuth\Http\Controllers;
-use Chatbox\ApiAuth\Http\AuthRequest;
-use Chatbox\Token\Token;
-
 use Chatbox\ApiAuth\Domains\UserServiceInterface;
+use Chatbox\ApiAuth\Http\AuthRequest;
+use Chatbox\MailAuth\Service\RegisterMailTokenService;
+use Chatbox\MailToken\Http\MailTokenRequest;
+
 use Chatbox\ApiAuth\ApiAuthService;
 
 /**
@@ -14,19 +15,26 @@ use Chatbox\ApiAuth\ApiAuthService;
  */
 class RegisterMailController extends AbstractMailController
 {
-
-
-    protected function handle(Token $token)
+    public function __construct(MailTokenRequest $request, RegisterMailTokenService $token)
     {
-        /** @var ApiAuthService $api */
-        $api = app(ApiAuthService::class);
+        parent::__construct($request, $token);
+    }
+
+
+    public function handle()
+    {
+        $key = $this->request->token();
+        $token = $this->token->check($key);
+
+        /** @var UserServiceInterface $api */
+        $user = app(UserServiceInterface::class);
         /** @var AuthRequest $req */
         $req = app(AuthRequest::class);
 
         $registerData = $req->getUserDataForRegister();
         $registerData["email"] = $token->value["email"];
 
-        $user = $api->user()->registerProfile($registerData);
+        $user = $user->registerProfile($registerData);
         return [
             "token" => $token,
             "user" => $user,

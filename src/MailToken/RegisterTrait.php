@@ -6,16 +6,16 @@
  * Time: 18:11
  */
 
-namespace Chatbox\Mailtoken;
+namespace Chatbox\MailToken;
 
 
 trait RegisterTrait
 {
 
     protected function registerMailTokenRoute($router,$entry,$class){
-        $router->get ("mail/$entry/send",  "{$class}@load");
-        $router->post("mail/$entry/check", "{$class}@send");
-        $router->post("mail/$entry/handle","{$class}@handle");
+        $router->post ("mail/$entry/send",  "{$class}@send");
+        $router->get  ("mail/$entry/check", "{$class}@load");
+        $router->post ("mail/$entry/handle","{$class}@handle");
     }
 
 }

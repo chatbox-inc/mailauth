@@ -6,7 +6,7 @@
  * Time: 22:22
  */
 
-namespace Chatbox\Mailtoken\Http;
+namespace Chatbox\MailToken\Http;
 
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Validation\Factory;
@@ -42,17 +42,10 @@ class MailTokenRequest
             "email"=>["required","email"],
             "data" => ["array"]
         ];
-        $passed = $this->validate([
-            "email" => $this->request->get("email"),
-            "data" => $this->request->get("data",[])
-        ],$rules);
-        $email = array_get($passed,"email");
-        $data = array_get($passed,"data",[]);
-        if($email){
-            return [$email,$data];
-        }else{
-            throw new \Exception("email must be non-empty string");
-        }
+        $passed = $this->validate($this->request->all(),$rules);
+        return array_merge($passed["data"],[
+            "email" => $passed["email"]
+        ]);
     }
 
     public function token(){
@@ -62,12 +55,7 @@ class MailTokenRequest
         $passed = $this->validate([
             "token" => $this->request->header("X-MAILTOKEN")
         ],$rules);
-        $token = array_get($passed,"token");
-        if($token){
-            return $token;
-        }else{
-            throw new \Exception("email must be non-empty string");
-        }
+        return $passed["token"];
     }
 
 

@@ -10,9 +10,4 @@ use Chatbox\Token\Token;
  */
 class PasswordResetMailController extends AbstractMailController
 {
-    protected $type="passwordReset";
-
-    protected function handle(Token $token)
-    {
-    }
 }

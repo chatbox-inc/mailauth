@@ -8,17 +8,26 @@
 
 namespace Chatbox\MailAuth\Specs;
 
+use Illuminate\Http\Response;
+use Peridot\Plugin\Lumen\LumenAppScope;
 
 trait HttpSpecTrait
 {
+
+    abstract protected function lumen():LumenAppScope;
+
     /**
      * @return Response
      */
     protected function response(){
-        $response = $this->lumen->response();
+        $response = $this->lumen()->response();
         return $response;
     }
 
+    /**
+     * @param bool $raw
+     * @return mixed
+     */
     protected function body($raw=true){
         if($raw){
             $body = $this->response()->getOriginalContent();
@@ -28,4 +37,12 @@ trait HttpSpecTrait
         }
     }
 
+    public function assertResponseOk(){
+        $e = $this->response()->exception ?: "response code should be 200";
+        assert($this->response()->getStatusCode() === 200,$e);
+    }
+
+    public function retrieveException(){
+        return $this->response()->exception;
+    }
 }
