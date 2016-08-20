@@ -5,5 +5,6 @@ server:
 apitest:
 	mocha lib/spec/index.js --require lib/spec/enable-power-assert.js
 test:
-	./vendor/bin/peridot specs
+	./vendor/bin/peridot specs/ApiAuth.spec.php
+	./vendor/bin/peridot specs/MailAuth.spec.php
 
