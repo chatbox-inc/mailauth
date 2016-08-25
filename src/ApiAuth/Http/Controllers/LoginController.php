@@ -1,8 +1,8 @@
 <?php
 namespace Chatbox\ApiAuth\Http\Controllers;
 use Chatbox\ApiAuth\Domains\UserServiceInterface;
-use Chatbox\ApiAuth\Http\AuthRequest;
-use Chatbox\ApiAuth\Http\Service\HttpTokenService;
+use Chatbox\ApiAuth\Http\Request\AuthToken;
+use Chatbox\ApiAuth\Http\Request\Credential;
 
 /**
  * Created by PhpStorm.
@@ -12,7 +12,6 @@ use Chatbox\ApiAuth\Http\Service\HttpTokenService;
  */
 class LoginController
 {
-    protected $request;
     protected $service;
 
     /**
@@ -21,17 +20,15 @@ class LoginController
      * @param $service
      */
     public function __construct(
-        AuthRequest $request,
         UserServiceInterface $service)
     {
-        $this->request = $request;
         $this->service = $service;
     }
 
 
-    public function login()
+    public function login(Credential $credential)
     {
-        $cred = $this->request->getCredential();
+        $cred = $credential->get();
         $user = $this->service->loadProfileByCredential($cred);
         $token = $this->service->serialize($user);
         return [
@@ -39,9 +36,9 @@ class LoginController
         ];
     }
 
-    public function logout()
+    public function logout(AuthToken $token)
     {
-        $token = $this->request->getToken();
+        $token = $token->get();
         $this->service->forget($token);
         return [];
     }

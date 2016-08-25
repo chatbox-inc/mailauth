@@ -8,6 +8,8 @@
 
 namespace Chatbox\MailToken\Http;
 
+use Chatbox\MailToken\Http\Request\MailAddress;
+use Chatbox\MailToken\Http\Request\MailToken;
 use Chatbox\MailToken\MailTokenTrait;
 use Chatbox\Token\Token;
 use Chatbox\MailToken\MailTokenService;
@@ -20,7 +22,6 @@ use Chatbox\MailToken\MailTokenService;
  */
 abstract class MailTokenController
 {
-    protected $request;
     /**
      * @var MailTokenService
      */
@@ -31,27 +32,25 @@ abstract class MailTokenController
      * @param MailTokenService
      */
     public function __construct(
-        MailTokenRequest $request,
         MailTokenService $token
     ){
-        $this->request = $request;
         $this->token = $token;
     }
 
-    public function send(){
-        $data = $this->request->mailaddress();
+    public function send(MailAddress $mailAddress){
+        $data = $mailAddress->get();
         $token = $this->token->sendmail($data["email"],$data);
         return $this->handleToken($token);
     }
 
-    public function load(){
-        $key = $this->request->token();
+    public function load(MailToken $mailToken){
+        $key = $mailToken->get();
         $token = $this->token->check($key);
         return $this->handleToken($token);
     }
 
-    public function handle(){
-        $key = $this->request->token();
+    public function handle(MailToken $mailToken){
+        $key = $mailToken->get();
         $token = $this->token->check($key);
         $response = $this->token->handle($token);
         return $response;

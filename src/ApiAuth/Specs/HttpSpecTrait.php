@@ -38,7 +38,8 @@ trait HttpSpecTrait
     }
 
     public function assertResponseOk(){
-        assert($this->response()->getStatusCode() === 200,"response code should be 200");
+        $e = $this->response()->exception ?: "response code should be 200";
+        assert($this->response()->getStatusCode() === 200,$e);
     }
 
     public function retrieveException(){

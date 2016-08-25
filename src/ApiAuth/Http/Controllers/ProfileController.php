@@ -3,6 +3,9 @@ namespace Chatbox\ApiAuth\Http\Controllers;
 use Chatbox\ApiAuth\Domains\User;
 use Chatbox\ApiAuth\Domains\UserServiceInterface;
 use Chatbox\ApiAuth\Http\AuthRequest;
+use Chatbox\ApiAuth\Http\Request\AuthToken;
+use Chatbox\ApiAuth\Http\Request\ProfileForRegister;
+use Chatbox\ApiAuth\Http\Request\ProfileForUpdate;
 use Chatbox\ApiAuth\Http\Service\HttpProfileService;
 
 /**
@@ -14,9 +17,9 @@ use Chatbox\ApiAuth\Http\Service\HttpProfileService;
 class ProfileController
 {
 
-    protected $request;
-
     protected $service;
+
+    protected $token;
 
     /**
      * ProfileController constructor.
@@ -24,23 +27,23 @@ class ProfileController
      * @param $service
      */
     public function __construct(
-        AuthRequest $request,
-        UserServiceInterface $service)
-    {
-        $this->request = $request;
+        UserServiceInterface $service,
+        AuthToken $token
+    ){
         $this->service = $service;
+        $this->token = $token;
     }
 
-    public function create()
+    public function create(ProfileForRegister $profile)
     {
-        $user = $this->request->getUserDataForRegister();
+        $user = $profile->get();
         $user = $this->service->registerProfile($user);
         return [
             "user" => $user
         ];
     }
 
-    public function load(){
+    public function load(AuthToken $token){
         $user = $this->unpackToken();
         $user = $this->service->loadProfileById($user->userId);
         return [
@@ -48,9 +51,9 @@ class ProfileController
         ];
     }
 
-    public function update(){
+    public function update(ProfileForUpdate $profile){
         $user = $this->unpackToken();
-        $userData = $this->request->getUserDataForUpdate();
+        $userData = $profile->get();
         $user = $this->service->updateProfile($user->userId,$userData);
         return [
             "user" => $user
@@ -66,8 +69,7 @@ class ProfileController
     }
 
     protected function unpackToken():User{
-        $token = $this->request->getToken();
-        return $this->service->unserialize($token);
+        return $this->token->getUser();
     }
 
 

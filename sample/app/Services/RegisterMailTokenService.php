@@ -16,11 +16,5 @@ class RegisterMailTokenService extends \Chatbox\MailAuth\Service\RegisterMailTok
 
     protected $subject = "新規登録について";
 
-    public function handle(Token $token)
-    {
-        // TODO: Implement handle() method.
-    }
-
-
 
 }
